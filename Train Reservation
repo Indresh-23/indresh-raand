@@ -1,0 +1,172 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstring>
+#include <cstdlib>
+
+using namespace std;
+
+class Train {
+private:
+    int trainNo, noFAFSeat, noFASSeat, noFSSSeat, noACSeat, noSSSeat;
+    char trainName[60], startingPoint[60], destination[60];
+
+public:
+    Train() {
+        trainNo = 0;
+        noFAFSeat = 0;
+        noFASSeat = 0;
+        noFSSSeat = 0;
+        noACSeat = 0;
+        noSSSeat = 0;
+        strcpy(trainName, "");
+        strcpy(startingPoint, "");
+        strcpy(destination, "");
+    }
+
+    void input();
+    void display();
+    int returnTrainNo() { return trainNo; }
+    int returnFAF() { return noFAFSeat; }
+    int returnFAS() { return noFASSeat; }
+    int returnFSS() { return noFSSSeat; }
+    int returnAC() { return noACSeat; }
+    int returnSS() { return noSSSeat; }
+};
+
+void Train::input() {
+    cout << "Enter Train Number: ";
+    cin >> trainNo;
+    cout << "Enter Train Name: ";
+    cin.ignore();
+    cin.getline(trainName, 60);
+    cout << "Enter Starting Point: ";
+    cin.getline(startingPoint, 60);
+    cout << "Enter Destination: ";
+    cin.getline(destination, 60);
+    cout << "Enter Number of A/C First Class Seats: ";
+    cin >> noFAFSeat;
+    cout << "Enter Number of A/C Second Class Seats: ";
+    cin >> noFASSeat;
+    cout << "Enter Number of First Class Sleeper Seats: ";
+    cin >> noFSSSeat;
+    cout << "Enter Number of A/C Chair Car Seats: ";
+    cin >> noACSeat;
+    cout << "Enter Number of Second Class Sleeper Seats: ";
+    cin >> noSSSeat;
+}
+
+void Train::display() {
+    cout << "\nTrain Number: " << trainNo
+         << "\nTrain Name: " << trainName
+         << "\nStarting Point: " << startingPoint
+         << "\nDestination: " << destination
+         << "\nA/C First Class Seats: " << noFAFSeat
+         << "\nA/C Second Class Seats: " << noFASSeat
+         << "\nFirst Class Sleeper Seats: " << noFSSSeat
+         << "\nA/C Chair Car Seats: " << noACSeat
+         << "\nSecond Class Sleeper Seats: " << noSSSeat << endl;
+}
+
+class Tickets {
+private:
+    int resNo, age, toFAF, toFAS, toFSS, toAC, toSS;
+    char status[40], name[40];
+
+public:
+    Tickets() {
+        resNo = 0;
+        age = 0;
+        toFAF = toFAS = toFSS = toAC = toSS = 0;
+        strcpy(status, "");
+        strcpy(name, "");
+    }
+
+    void reservation();
+    void display();
+    int returnResNo() { return resNo; }
+};
+
+void Tickets::reservation() {
+    cout << "Enter Reservation Number: ";
+    cin >> resNo;
+    cout << "Enter Name: ";
+    cin.ignore();
+    cin.getline(name, 40);
+    cout << "Enter Age: ";
+    cin >> age;
+    cout << "Enter Travel Class (1 - A/C First Class, 2 - A/C Second Class, etc.): ";
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+    case 1:
+        strcpy(status, "Confirmed - A/C First Class");
+        break;
+    case 2:
+        strcpy(status, "Confirmed - A/C Second Class");
+        break;
+    case 3:
+        strcpy(status, "Confirmed - First Class Sleeper");
+        break;
+    case 4:
+        strcpy(status, "Confirmed - A/C Chair Car");
+        break;
+    case 5:
+        strcpy(status, "Confirmed - Second Class Sleeper");
+        break;
+    default:
+        strcpy(status, "Pending");
+        break;
+    }
+
+    cout << "\nReservation Successful!";
+    cout << "\nReservation Number: " << resNo;
+    cout << "\nName: " << name;
+    cout << "\nStatus: " << status << endl;
+}
+
+void Tickets::display() {
+    cout << "\nReservation Number: " << resNo
+         << "\nName: " << name
+         << "\nAge: " << age
+         << "\nStatus: " << status << endl;
+}
+
+int main() {
+    Train train;
+    Tickets ticket;
+    int choice;
+
+    while (true) {
+        cout << "\nRailway Ticket Reservation System";
+        cout << "\n1. Enter Train Details";
+        cout << "\n2. Display Train Details";
+        cout << "\n3. Reserve a Ticket";
+        cout << "\n4. Display Reservation";
+        cout << "\n5. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            train.input();
+            break;
+        case 2:
+            train.display();
+            break;
+        case 3:
+            ticket.reservation();
+            break;
+        case 4:
+            ticket.display();
+            break;
+        case 5:
+            exit(0);
+        default:
+            cout << "\nInvalid choice! Try again.";
+        }
+    }
+
+    return 0;
+}
